@@ -13,3 +13,9 @@ def createdb():
   subprocess.run(['lxc', 'exec', 'db', '--', 'apt', 'update'])
   subprocess.run(['lxc', 'exec', 'db', '--', 'apt', 'install', '-y', 'mongodb'])
   
+  
+ dbpath=/var/lib/mongodb
+logpath=/var/log/mongodb/mongodb.log
+logappend=true
+bind_ip = 127.0.0.1,10.0.0.20
+journal=true
