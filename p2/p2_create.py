@@ -49,11 +49,13 @@ def create():
 		mensaje=numeroS + 'creado y configurado'
 		logger.info(mensaje)
 		
-		subprocess.run(['lxc', 'start', numeroS])
-		subprocess.run(['lxc', 'exec', numeroS, 'bash'])
-		subprocess.run(['apt', 'update'])
-		subprocess.run(['apt','install', '-y', 'apache2'])
-		subprocess.run(['exit'])
+		#subprocess.run(['lxc', 'start', numeroS])
+		#subprocess.run(['lxc', 'exec', numeroS, 'bash'])
+		#subprocess.run(['apt', 'update'])
+		#subprocess.run(['apt','install', '-y', 'apache2'])
+		#subprocess.run(['exit'])
+		
+		
 		
 	
 	
