@@ -15,7 +15,7 @@ def createdb():
 	
 	
 	subprocess.run(['lxc', 'network', 'attach', 'lxdbr0', 'db', 'eth0'])
-	subprocess.run(['lxc', 'config', 'device', 'set', 'db', 'eth0', 'ipv4.address', '10.0.0.20'])
+	subprocess.run(['lxc', 'config', 'device', 'set', 'db', 'eth0', 'ipv4.address', '134.3.0.20'])
 	subprocess.run(['lxc', 'start', 'db'])
 	logger.info('Contenedor de la base de datos configurado y arrancado')
 	
@@ -30,7 +30,7 @@ def createdb():
 		texto = 'dbpath=/var/lib/mongodb'
 		texto2 = 'logpath=/var/log/mongodb/mongodb.log'
 		texto3 = 'logappend=true'
-		texto4 = 'bind_ip = 127.0.0.1,10.0.0.20'
+		texto4 = 'bind_ip = 127.0.0.1,134.3.0.20'
 		texto5 = 'journal=true'
 	
 		fich.write(texto + '\n')
