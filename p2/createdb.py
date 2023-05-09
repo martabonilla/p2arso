@@ -5,13 +5,23 @@ import logging
 import time
 
 def createdb():
+	
+	logging.basicConfig(level=logging.INFO)
+	logger = logging.getLogger(__name__)
+	
+	
 	subprocess.run(['lxc', 'init', 'imagenbase', 'db'])
+	logger.info('Contenedor de la base de datos creado')
+	
+	
 	subprocess.run(['lxc', 'network', 'attach', 'lxdbr0', 'db', 'eth0'])
 	subprocess.run(['lxc', 'config', 'device', 'set', 'db', 'eth0', 'ipv4.address', '10.0.0.20'])
 	subprocess.run(['lxc', 'start', 'db'])
+	logger.info('Contenedor de la base de datos configurado y arrancado')
 	
 	subprocess.run(['lxc', 'exec', 'db', '--', 'apt', 'update'])
 	subprocess.run(['lxc', 'exec', 'db', '--', 'apt', 'install', '-y', 'mongodb'])
+	logger.info('MongoDB instalado en el contenedor de la base de datos')
 	
 	subprocess.run(['lxc', 'file', 'pull', 'db/etc/mongodb.conf', '.'])
 	
@@ -32,3 +42,4 @@ def createdb():
 	subprocess.run(['lxc', 'file', 'push', 'mongodb.conf', 'db/etc/mongodb.conf'])
 	
 	subprocess.run(['lxc', 'restart', 'db'])
+	logger.info('MongoDB instalado correctamente enb el contenedor de la base de datos')
