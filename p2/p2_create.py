@@ -24,7 +24,6 @@ def create():
 	subprocess.run(['lxc', 'init', 'imagenbase', 'cl'])
 	logger.info('Cliente creado')
 	
-	#subprocess.run(['lxc', 'stop', 'lb'])
 	subprocess.run(['lxc', 'network', 'set', 'lxdbr0', 'ipv4.nat', 'true'])
 	subprocess.run(['lxc', 'network', 'set', 'lxdbr0', 'ipv4.address', '134.3.0.1/24'])
 	subprocess.run(['lxc', 'network', 'set', 'lxdbr0', 'ipv6.address', 'none'])
@@ -34,7 +33,6 @@ def create():
 	subprocess.run(['lxc', 'config', 'device', 'set', 'lb', 'eth0', 'ipv4.address', '134.3.0.10'])
 	logger.info('Balanceador unido a eth0')
 	time.sleep(10)
-	#subprocess.run(['lxc', 'init', 'lb'])
 	
 	
 	
@@ -66,7 +64,7 @@ def create():
 	subprocess.run(['lxc', 'network', 'set', 'lxdbr1', 'ipv6.address', 'none'])
 	subprocess.run(['lxc', 'network', 'set', 'lxdbr1', 'ipv6.nat', 'false'])
 	time.sleep(10)
-	#subprocess.run(['lxc', 'stop', 'lb'])
+	
 	subprocess.run(['lxc', 'network', 'attach', 'lxdbr1', 'lb', 'eth1'])
 	subprocess.run(['lxc', 'config', 'device', 'set', 'lb', 'eth1', 'ipv4.address', '134.3.1.10'])
 	
@@ -96,7 +94,7 @@ def create():
 			
 	logger.info('Fichero balanceador modificado')
 	time.sleep(10)
-	#subprocess.run(['lxc', 'file', 'push', '50-cloud-init.yaml', 'lb/etc/netplan/50-cloud-init.yaml'])
+	
 	eth1_in = False
 	while not eth1_in:
 		time.sleep(3)
@@ -107,7 +105,7 @@ def create():
 		
 	logger.info('Fichero balanceador subido')	
 	time.sleep(10)
-	#subprocess.run(['lxc','exec','lb','--','shutdown','-r','now'])
+	
 	subprocess.run(['lxc','restart','lb'])
 	
 	subprocess.run(['lxc', 'exec', 'lb', 'bash'])
@@ -179,7 +177,6 @@ def create():
 			
 	logger.info('Fichero cliente modificado')
 	time.sleep(10)
-	#subprocess.run(['lxc', 'file', 'push', '50-cloud-init.yaml', 'lb/etc/netplan/50-cloud-init.yaml'])
 	eth1_in = False
 	while not eth1_in:
 		time.sleep(3)
