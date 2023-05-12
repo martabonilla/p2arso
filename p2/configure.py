@@ -152,6 +152,9 @@ def configure():
 	subprocess.run(['lxc', 'copy', 'db', 'remoto:db'])
 	logger.info('Contenedor de la BD copiado al equipo remoto')
 	
+	#Creamos un proxy, para acceso remoto a las base de datos de manera remota
+	subprocess.run(['lxc', 'config', 'device', 'add', 'db', 'miproxy', 'proxy', 'listen=tcp:IP-B:27017', 'connect=tcp:134.3.0.20:27017'])
+	
 	
 		
 			
