@@ -6,25 +6,28 @@ import time
 
 def createdb():
 	
+	#Definimos el nivel de LOG
 	logging.basicConfig(level=logging.INFO)
 	logger = logging.getLogger(__name__)
 	
-	
+	#Creamos el contenedor a partir de la imagen descargada
 	subprocess.run(['lxc', 'init', 'imagenbase', 'db'])
 	logger.info('Contenedor de la base de datos creado')
 	
-	
+	#Unimos la BD al router
 	subprocess.run(['lxc', 'network', 'attach', 'lxdbr0', 'db', 'eth0'])
 	subprocess.run(['lxc', 'config', 'device', 'set', 'db', 'eth0', 'ipv4.address', '134.3.0.20'])
 	subprocess.run(['lxc', 'start', 'db'])
 	logger.info('Contenedor de la base de datos configurado y arrancado')
 	
+	#Instalamos MongoDB en la BD
 	subprocess.run(['lxc', 'exec', 'db', '--', 'apt', 'update'])
 	subprocess.run(['lxc', 'exec', 'db', '--', 'apt', 'install', '-y', 'mongodb'])
 	logger.info('MongoDB instalado en el contenedor de la base de datos')
 	
 	subprocess.run(['lxc', 'file', 'pull', 'db/etc/mongodb.conf', '.'])
 	
+	#Configuramos MongoDB
 	time.sleep(10)
 	with open('mongodb.conf', 'w') as fich:
 		texto = 'dbpath=/var/lib/mongodb'
