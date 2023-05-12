@@ -36,25 +36,25 @@ if sys.argv[1]== 'create':
 	p1_create.create()
 	
 elif sys.argv[1]== 'delete':
-	p1_delete.delete()
+	p2_delete.delete()
 elif sys.argv[1]== 'list':
-	p1_list.list()
+	p2_list.list()
 elif sys.argv[1] == 'stop1':
-	p1_stop1.stop1(sys.argv[2])
+	p2_stop1.stop1(sys.argv[2])
 	
 elif  sys.argv[1]== 'start1':
-	p1_start1.start1(sys.argv[2])
+	p2_start1.start1(sys.argv[2])
 	
 elif sys.argv[1] == 'delete1':
-	p1_delete1.delete1(sys.argv[2])
+	p2_delete1.delete1(sys.argv[2])
 
 elif sys.argv[1]== 'create1':
-	p1_create1.create1()
+	p2_create1.create1()
 elif sys.argv[1]== 'stop':
-	p1_stop.stop()
+	p2_stop.stop()
 
 else:
-	p1_start.start()
+	p2_start.start()
 	
 
 	
