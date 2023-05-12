@@ -33,7 +33,7 @@ def create():
 	subprocess.run(['lxc', 'network', 'attach', 'lxdbr0', 'lb', 'eth0'])
 	subprocess.run(['lxc', 'config', 'device', 'set', 'lb', 'eth0', 'ipv4.address', '134.3.0.10'])
 	logger.info('Balanceador unido a eth0')
-	time.sleep(10)
+	time.sleep(5)
 	
 	
 	#Creamos los servidores en función de la entrada e instalamos Node.js
@@ -43,7 +43,7 @@ def create():
 		ip='134.3.0.'+ str(10+numero)
 		subprocess.run(['lxc', 'launch', 'imagenbase', numeroS])
 		subprocess.run(['lxc', 'stop', numeroS])
-		time.sleep(20)
+		time.sleep(5)
 		subprocess.run(['lxc', 'network', 'attach', 'lxdbr0', numeroS, 'eth0'])
 		subprocess.run(['lxc', 'config', 'device', 'set', numeroS, 'eth0', 'ipv4.address', ip])
 		#subprocess.run(['lxc', 'start', numeroS])
@@ -73,10 +73,10 @@ def create():
 	subprocess.run(['lxc', 'network', 'create', 'lxdbr1'])	
 	subprocess.run(['lxc', 'network', 'set', 'lxdbr1', 'ipv4.nat', 'true'])
 	subprocess.run(['lxc', 'network', 'set', 'lxdbr1', 'ipv4.address', '134.3.1.1/24'])
-	time.sleep(10)
+	time.sleep(5)
 	subprocess.run(['lxc', 'network', 'set', 'lxdbr1', 'ipv6.address', 'none'])
 	subprocess.run(['lxc', 'network', 'set', 'lxdbr1', 'ipv6.nat', 'false'])
-	time.sleep(10)
+	time.sleep(5)
 	
 	subprocess.run(['lxc', 'network', 'attach', 'lxdbr1', 'lb', 'eth1'])
 	subprocess.run(['lxc', 'config', 'device', 'set', 'lb', 'eth1', 'ipv4.address', '134.3.1.10'])
@@ -87,7 +87,7 @@ def create():
 	subprocess.run(['lxc', 'file', 'pull', 'lb/etc/netplan/50-cloud-init.yaml', '.'])
 	logger.info('Fichero balanceador bajado')
 	
-	time.sleep(10)
+	time.sleep(5)
 	with open('50-cloud-init.yaml', 'w') as fich:
 		texto = 'network:'
 		texto2 = '    version: 2'
@@ -106,7 +106,7 @@ def create():
 		fich.write(texto7)
 			
 	logger.info('Fichero balanceador modificado')
-	time.sleep(10)
+	time.sleep(5)
 	
 	eth1_in = False
 	while not eth1_in:
@@ -117,7 +117,7 @@ def create():
 		eth1_in = "eth1" in respuesta.stdout.decode("utf-8")
 		
 	logger.info('Fichero balanceador subido')	
-	time.sleep(10)
+	time.sleep(5)
 	
 	#Instalamos haproxy en el balanceador
 	subprocess.run(['lxc','restart','lb'])
@@ -130,7 +130,7 @@ def create():
 	subprocess.run(['lxc', 'file', 'pull', 'lb/etc/haproxy/haproxy.cfg', '.'])
 	logger.info('Fichero haproxy bajado')
 	
-	time.sleep(10)
+	time.sleep(5)
 	with open('haproxy.cfg', 'a') as fich:
 	
 		texto =  'frontend firstbalance'
@@ -167,13 +167,13 @@ def create():
 	subprocess.run(['lxc', 'network', 'attach', 'lxdbr1', 'cl', 'eth1'])
 	subprocess.run(['lxc', 'config', 'device', 'set', 'cl', 'eth1', 'ipv4.address', '134.3.1.11'])
 	logger.info('eth1 configurado')
-	time.sleep(10)
+	time.sleep(5)
 	subprocess.run(['lxc', 'start', 'cl'])
 	
 	subprocess.run(['lxc', 'file', 'pull', 'cl/etc/netplan/50-cloud-init.yaml', '.'])
 	logger.info('Fichero cliente bajado')
 	
-	time.sleep(10)
+	time.sleep(5)
 	with open('50-cloud-init.yaml', 'w') as fich:
 		texto = 'network:'
 		texto2 = '    version: 2'
@@ -190,7 +190,7 @@ def create():
 		
 			
 	logger.info('Fichero cliente modificado')
-	time.sleep(10)
+	time.sleep(5)
 	eth1_in = False
 	while not eth1_in:
 		time.sleep(3)
@@ -200,20 +200,7 @@ def create():
 		eth1_in = "eth1" in respuesta.stdout.decode("utf-8")
 		
 	logger.info('Fichero cliente subido')	
-	time.sleep(10)
+	time.sleep(5)
 	#subprocess.run(['lxc','exec','lb','--','shutdown','-r','now'])
 	subprocess.run(['lxc','restart','cl'])
-		
-	
-	
-	
-	
-		
-	time.sleep(10)
-		
-	
-		
-	
-	
-	
-		
+				
