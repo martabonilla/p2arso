@@ -8,7 +8,6 @@ import pickle
 import logging
 import time
 import p2_create
-import p2_create1
 import p2_delete
 import p2_delete1
 import p2_list
@@ -35,7 +34,7 @@ if sys.argv[1]== 'create':
 		with open('contenedores.txt', 'wb') as fich:
 			pickle.dump(fichero, fich)
 	
-	p1_create.create()
+	p2_create.create()
 	
 elif sys.argv[1]== 'delete':
 	p2_delete.delete()
