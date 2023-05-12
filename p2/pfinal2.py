@@ -16,6 +16,8 @@ import p2_start
 import p2_start1
 import p2_stop
 import p2_stop1
+import configure
+import enlarge
 
 	
 	
