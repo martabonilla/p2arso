@@ -37,15 +37,15 @@ def create1():
 	subprocess.run(['lxc', 'config', 'device', 'set', variable, 'eth0', 'ipv4.address', ip])
 	subprocess.run(['lxc', 'start', variable])
 	
-	direccion = numeroS + '/root/install.sh'
+	direccion = variable + '/root/install.sh'
 	subprocess.run(['lxc', 'file', 'push', 'install.sh', 'direccion'])
-	subprocess.run(['lxc', 'exec', numeroS,  '--', 'chmod', '+x', 'install.sh'])
+	subprocess.run(['lxc', 'exec', variable,  '--', 'chmod', '+x', 'install.sh'])
 		
-	direccion2 = numeroS + '/root'
+	direccion2 = variable + '/root'
 	subprocess.run(['lxc', 'file', 'push', '-r', 'app', direccion2])
-	subprocess.run(['lxc', 'exec', numeroS, '--' './install.sh'])
-	subprocess.run(['lxc', 'restart', numeroS])
-	subprocess.run(['lxc', 'exec', numeroS, '--', 'forever', 'start', 'app/rest', 'server.js'])
+	subprocess.run(['lxc', 'exec', variable, '--' './install.sh'])
+	subprocess.run(['lxc', 'restart', variable])
+	subprocess.run(['lxc', 'exec', variable, '--', 'forever', 'start', 'app/rest', 'server.js'])
 	
 	
 
