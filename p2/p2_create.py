@@ -6,7 +6,7 @@ import time
 
 
 def create():
-
+	#Definimos el niverl de LOG
 	logging.basicConfig(level=logging.INFO)
 	logger = logging.getLogger(__name__)
 	
@@ -15,12 +15,13 @@ def create():
 		if fichero>5:
 			fichero=5
 	
+	#Descargamos la imagen y creamos el contenedor
 	subprocess.run(['lxc', 'image', 'import', '/mnt/vnx/repo/arso/ubuntu2004.tar.gz', '--alias', 'imagenbase'])
 	subprocess.run(['lxc', 'init', 'imagenbase', 'lb'])
 	logger.info('Balanceador creado')
 	
 	
-	
+	#Creamos y configuramos el cliente
 	subprocess.run(['lxc', 'init', 'imagenbase', 'cl'])
 	logger.info('Cliente creado')
 	
@@ -35,7 +36,7 @@ def create():
 	time.sleep(10)
 	
 	
-	
+	#Creamos los servidores en función de la entrada e instalamos Node.js
 	for i in range(fichero):
 		numero=i+1
 		numeroS='s'+str(numero)
@@ -68,7 +69,7 @@ def create():
 		
 		
 	
-	
+	#Creamos un nuevo router y lo unimos al balanceador
 	subprocess.run(['lxc', 'network', 'create', 'lxdbr1'])	
 	subprocess.run(['lxc', 'network', 'set', 'lxdbr1', 'ipv4.nat', 'true'])
 	subprocess.run(['lxc', 'network', 'set', 'lxdbr1', 'ipv4.address', '134.3.1.1/24'])
@@ -118,6 +119,7 @@ def create():
 	logger.info('Fichero balanceador subido')	
 	time.sleep(10)
 	
+	#Instalamos haproxy en el balanceador
 	subprocess.run(['lxc','restart','lb'])
 	
 	subprocess.run(['lxc', 'exec', 'lb', 'bash'])
@@ -161,7 +163,7 @@ def create():
 	subprocess.run(['service', 'haproxy', 'start'])
 	
 		
-	
+	#Unimos cliente a eth1
 	subprocess.run(['lxc', 'network', 'attach', 'lxdbr1', 'cl', 'eth1'])
 	subprocess.run(['lxc', 'config', 'device', 'set', 'cl', 'eth1', 'ipv4.address', '134.3.1.11'])
 	logger.info('eth1 configurado')
