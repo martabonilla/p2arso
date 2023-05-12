@@ -3,6 +3,7 @@ import sys
 import pickle
 import logging
 import time
+import socket
 
 
 def configure():
@@ -15,6 +16,17 @@ def configure():
 		if fichero>5:
 			fichero=5
 			
+#Obtenemos las direcciones IP de A (local) y de B (remoto) para crear la BD remota
+	IP-A=socket.gethostbyname(socket.gethostname())
+	print('La dirección IP de A es '+ socket.gethostbyname(socket.gethostname()))
+	while True:
+		IP-B=input('Introduzca la IP de B: ')
+		if IP-B is '':
+			print('Valor inválido')
+			continue
+		else:
+			break
+	logger.info('Direcciones IP obtenidas')
 #Creamos el contenedor a partir de la imagen descargada
 	subprocess.run(['lxc', 'init', 'imagenbase', 'db'])
 	logger.info('Contenedor de la base de datos creado')
@@ -120,6 +132,26 @@ def configure():
 	
 	subprocess.run(['haproxy', '-f', 'lb/etc/haproxy/haproxy.cfg', '-c'])
 	subprocess.run(['service', 'haproxy', 'start'])
+	
+	#Permitir el acceso remoto a las operaciones de LXD
+	texto = IP-A + ':8443'
+	subprocess.run(['lxc', 'config', 'set', 'core.https', 'address', texto])
+	logger.info('Hemos permitido el acceso remoto a las operaciones de LXD')
+	
+	#Acreditarse en el sistema remoto. Esto permite al equipo lA conectarse de manera remota al servicio LXD que se ejecuta en el equipo lB. remoto es el nombre que le damos al remoto de LXD.
+	texto2= IP-B+':8443'
+	subprocess.run(['lxc', 'remote', 'add', 'remoto', texto2, '--password', 'ARSO', '--accept-certificate'])
+	logger.info('El equipo lA conectarse de manera remota al servicio LXD que se ejecuta en el equipo lB')
+	
+	#Configurar un bridge remoto. Este bridge ya existe en el equipo lB
+	subprocess.run(['lxc', 'network', 'set', 'remoto:lxdbr0', 'ipv4.address', '134.3.0.1/24'])
+	subprocess.run(['lxc', 'network', 'set', 'remoto:lxdbr0', 'ipv4.address', '134.3.0.1/24'])
+	logger.info('Bridge remoto configurado')
+	
+	#Copiamos el contenedor de BD que hamos creado al equipo remoto
+	subprocess.run(['lxc', 'copy', 'db', 'remoto:db'])
+	logger.info('Contenedor de la BD copiado al equipo remoto')
+	
 	
 		
 			
