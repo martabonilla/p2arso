@@ -50,15 +50,15 @@ def create():
 		mensaje=numeroS + 'creado y configurado'
 		logger.info(mensaje)
 		
-		direccion = numeroS + '/root/install.sh'
-		subprocess.run(['lxc', 'file', 'push', 'install.sh', 'direccion'])
-		subprocess.run(['lxc', 'exec', numeroS,  '--', 'chmod', '+x', 'install.sh'])
+		#direccion = numeroS + '/root/install.sh'
+		#subprocess.run(['lxc', 'file', 'push', 'install.sh', 'direccion'])
+		#subprocess.run(['lxc', 'exec', numeroS,  '--', 'chmod', '+x', 'install.sh'])
 		
-		direccion2 = numeroS + '/root'
-		subprocess.run(['lxc', 'file', 'push', '-r', 'app', direccion2])
-		subprocess.run(['lxc', 'exec', numeroS, '--' './install.sh'])
-		subprocess.run(['lxc', 'restart', numeroS])
-		subprocess.run(['lxc', 'exec', numeroS, '--', 'forever', 'start', 'app/rest', 'server.js'])
+		#direccion2 = numeroS + '/root'
+		#subprocess.run(['lxc', 'file', 'push', '-r', 'app', direccion2])
+		#subprocess.run(['lxc', 'exec', numeroS, '--' './install.sh'])
+		#subprocess.run(['lxc', 'restart', numeroS])
+		#subprocess.run(['lxc', 'exec', numeroS, '--', 'forever', 'start', 'app/rest', 'server.js'])
 		
 		#subprocess.run(['lxc', 'start', numeroS])
 		#subprocess.run(['lxc', 'exec', numeroS, 'bash'])
@@ -120,47 +120,47 @@ def create():
 	time.sleep(5)
 	
 	#Instalamos haproxy en el balanceador
-	subprocess.run(['lxc','restart','lb'])
+	#subprocess.run(['lxc','restart','lb'])
 	
-	subprocess.run(['lxc', 'exec', 'lb', 'bash'])
-	subprocess.run(['apt', 'update'])
-	subprocess.run(['apt', 'install', 'haproxy'])
+	#subprocess.run(['lxc', 'exec', 'lb', 'bash'])
+	#subprocess.run(['apt', 'update'])
+	#subprocess.run(['apt', 'install', 'haproxy'])
 	
 	
-	subprocess.run(['lxc', 'file', 'pull', 'lb/etc/haproxy/haproxy.cfg', '.'])
-	logger.info('Fichero haproxy bajado')
+	#subprocess.run(['lxc', 'file', 'pull', 'lb/etc/haproxy/haproxy.cfg', '.'])
+	#logger.info('Fichero haproxy bajado')
 	
-	time.sleep(5)
-	with open('haproxy.cfg', 'a') as fich:
+	#time.sleep(5)
+	#with open('haproxy.cfg', 'a') as fich:
 	
-		texto =  'frontend firstbalance'
-		texto2 = '     bind *:80'
-		texto3 = '     option forwardfor'
-		texto4 = '     default_backend webservers'
-		texto5 = 'backend webservers'
-		texto6 = '     balance roundrobin'
+		#texto =  'frontend firstbalance'
+		#texto2 = '     bind *:80'
+		#texto3 = '     option forwardfor'
+		#texto4 = '     default_backend webservers'
+		#texto5 = 'backend webservers'
+		#texto6 = '     balance roundrobin'
 	
-		fich.write(texto + '\n')
-		fich.write(texto2 + '\n')
-		fich.write(texto3 + '\n')
-		fich.write(texto4 + '\n')
-		fich.write(texto5 + '\n')
-		fich.write(texto6 + '\n')
+		#fich.write(texto + '\n')
+		#fich.write(texto2 + '\n')
+		#fich.write(texto3 + '\n')
+		#fich.write(texto4 + '\n')
+		#fich.write(texto5 + '\n')
+		#fich.write(texto6 + '\n')
 		
-		for i in range(fichero):
-			numero = i +1
-			numeroS = 's' + str(numero)
-			fich.write('     server webserver' + numero + ' ' + numeroS + ':80 check')
+		#for i in range(fichero):
+		#	numero = i +1
+		#	numeroS = 's' + str(numero)
+		#	fich.write('     server webserver' + numero + ' ' + numeroS + ':80 check')
 		
-		fich.write('     option httpchk')
-		logger.info('Fichero haproxy modificado')
+		#fich.write('     option httpchk')
+#		logger.info('Fichero haproxy modificado')
 		
-	subprocess.run(["lxc", "file", "push", "haproxy.cfg", "lb/etc/haproxy/haproxy.cfg"])
+#	subprocess.run(["lxc", "file", "push", "haproxy.cfg", "lb/etc/haproxy/haproxy.cfg"])
 		
-	logger.info('Fichero balanceador subido')	
+#	logger.info('Fichero balanceador subido')	
 	
-	subprocess.run(['haproxy', '-f', 'lb/etc/haproxy/haproxy.cfg', '-c'])
-	subprocess.run(['service', 'haproxy', 'start'])
+#	subprocess.run(['haproxy', '-f', 'lb/etc/haproxy/haproxy.cfg', '-c'])
+#	subprocess.run(['service', 'haproxy', 'start'])
 	
 		
 	#Unimos cliente a eth1
