@@ -30,7 +30,7 @@ def create1():
 	variable = 's'+ str(variablefinal)
 	subprocess.run(['lxc', 'launch', 'imagenbase', variable])
 	subprocess.run(['lxc', 'stop', variable])
-	ip ='10.0.0.1' + str(variablefinal)
+	ip ='134.3.0.1' + str(variablefinal)
 	
 	subprocess.run(['lxc', 'launch', 'imagenbase', variable])
 	subprocess.run(['lxc', 'network', 'attach', 'lxdbr0', variable, 'eth0'])
