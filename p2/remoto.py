@@ -62,12 +62,9 @@ def remoto():
 				break
 			else:
 				continue
-
-				
-remoto()
 	
 	
 	with open('app/md-seed-config.js', 'w') as fich:
 		fich.writelines(data2)
 
-
+remoto()
