@@ -26,10 +26,10 @@ def remoto():
 	
 	
 #Permitimos el acceso remoto a las operaciones LXD
-	subprocess.run('lxc' 'config' 'set' 'core.https' 'address' 'IPB')
+	subprocess.run('lxc', 'config', 'set', 'core.https', 'address', IPB)
 	
 #Información para la acreditación en remoto
-	subprocess.run('lxc' 'config' 'set' 'core.trust' 'password' 'ARSO')
+	subprocess.run('lxc', 'config', 'set', 'core.trust', 'password', 'ARSO')
 
 #Cambiamos el fichero rest_server (cambiamos IP de MongoDB)
 	buscado = 'await mongoose.connect'
