@@ -1,6 +1,6 @@
 #Fichero que permite la conexion remota y debe ejecutarse desde otro computador
 import socket
-import subrprocess
+import subprocess
 import logging
 
 def remoto():
