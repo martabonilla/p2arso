@@ -21,10 +21,14 @@ def createdb():
 	logger.info('Contenedor de la base de datos configurado y arrancado')
 	
 	#Instalamos MongoDB en la BD
+	time.sleep(10)
 	subprocess.run(['lxc', 'exec', 'db', '--', 'apt', 'update'])
+	time.sleep(10)
 	subprocess.run(['lxc', 'exec', 'db', '--', 'apt', 'install', '-y', 'mongodb'])
+	time.sleep(10)
 	logger.info('MongoDB instalado en el contenedor de la base de datos')
 	
+	time.sleep(20)
 	subprocess.run(['lxc', 'file', 'pull', 'db/etc/mongodb.conf', '.'])
 	
 	#Configuramos MongoDB
@@ -42,6 +46,7 @@ def createdb():
 		fich.write(texto4 + '\n')
 		fich.write(texto5)
 	
+	time.sleep(10)
 	subprocess.run(['lxc', 'file', 'push', 'mongodb.conf', 'db/etc/mongodb.conf'])
 	
 	subprocess.run(['lxc', 'restart', 'db'])
