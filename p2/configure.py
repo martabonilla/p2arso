@@ -20,8 +20,8 @@ def configure():
 	IP-A=socket.gethostbyname(socket.gethostname())
 	print('La dirección IP de A es '+ socket.gethostbyname(socket.gethostname()))
 	while True:
-		IP-B=input('Introduzca la IP de B: ')
-		if IP-B is '':
+		IP_B==input('Introduzca la IP de B: ')
+		if IP_B is '':
 			print('Valor inválido')
 			continue
 		else:
@@ -134,12 +134,12 @@ def configure():
 	subprocess.run(['service', 'haproxy', 'start'])
 	
 	#Permitir el acceso remoto a las operaciones de LXD
-	texto = IP-A + ':8443'
+	texto = IP_A + ':8443'
 	subprocess.run(['lxc', 'config', 'set', 'core.https', 'address', texto])
 	logger.info('Hemos permitido el acceso remoto a las operaciones de LXD')
 	
 	#Acreditarse en el sistema remoto. Esto permite al equipo lA conectarse de manera remota al servicio LXD que se ejecuta en el equipo lB. remoto es el nombre que le damos al remoto de LXD.
-	texto2= IP-B+':8443'
+	texto2= IP_B+':8443'
 	subprocess.run(['lxc', 'remote', 'add', 'remoto', texto2, '--password', 'ARSO', '--accept-certificate'])
 	logger.info('El equipo lA conectarse de manera remota al servicio LXD que se ejecuta en el equipo lB')
 	
