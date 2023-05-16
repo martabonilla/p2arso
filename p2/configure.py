@@ -17,7 +17,7 @@ def configure():
 			fichero=5
 			
 #Obtenemos las direcciones IP de A (local) y de B (remoto) para crear la BD remota
-	IP-A=socket.gethostbyname(socket.gethostname())
+	IP_A=socket.gethostbyname(socket.gethostname())
 	print('La dirección IP de A es '+ socket.gethostbyname(socket.gethostname()))
 	while True:
 		IP_B=input('Introduzca la IP de B: ')
