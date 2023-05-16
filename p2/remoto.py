@@ -30,7 +30,7 @@ def remoto():
 	subprocess.run(['lxc', 'config', 'set', 'core.https_address', IPB])
 	
 #Información para la acreditación en remoto
-	subprocess.run('lxc', 'config', 'set', 'core.trust_password', 'ARSO')
+	subprocess.run(['lxc', 'config', 'set', 'core.trust_password', 'ARSO'])
 
 #Cambiamos el fichero rest_server (cambiamos IP de MongoDB)
 	buscado = 'await mongoose.connect'
