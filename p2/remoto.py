@@ -13,7 +13,7 @@ def remoto():
 	print('La direcciín IP de B es ' + socket.gethostbyname(socket.gethostname()))
 	while True:
 		IP_A=input('Introduzca la IP de A: ')
-		if IP_A is '':
+		if IP_A == '':
 			print('Valor invalido')
 			continue
 		
