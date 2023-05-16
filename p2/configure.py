@@ -20,8 +20,8 @@ def configure():
 	IP-A=socket.gethostbyname(socket.gethostname())
 	print('La dirección IP de A es '+ socket.gethostbyname(socket.gethostname()))
 	while True:
-		IP_B==input('Introduzca la IP de B: ')
-		if IP_B is '':
+		IP_B=input('Introduzca la IP de B: ')
+		if IP_B == '':
 			print('Valor inválido')
 			continue
 		else:
