@@ -75,16 +75,16 @@ def configure():
 		ip='134.3.0.'+ str(10+numero)
 		
 		
-		subprocess.run(['lxc', 'stop', numeroS])
+		#subprocess.run(['lxc', 'start', numeroS])
 				
 		direccion = numeroS + '/root/install.sh'
-		subprocess.run(['lxc', 'file', 'push', 'install.sh', 'direccion'])
+		subprocess.run(['lxc', 'file', 'push', 'install.sh', direccion])
 		subprocess.run(['lxc', 'exec', numeroS,  '--', 'chmod', '+x', 'install.sh'])
 #Desplegamos la aplicación en los servidores
 		time.sleep(5)
 		direccion2 = numeroS + '/root'
 		subprocess.run(['lxc', 'file', 'push', '-r', 'app', direccion2])
-		subprocess.run(['lxc', 'exec', numeroS, '--' './install.sh'])
+		subprocess.run(['lxc', 'exec', numeroS, '--' ,'./install.sh'])
 		subprocess.run(['lxc', 'restart', numeroS])
 		subprocess.run(['lxc', 'exec', numeroS, '--', 'forever', 'start', 'app/rest', 'server.js'])
 		
@@ -127,7 +127,7 @@ def configure():
 		fich.write('     option httpchk')
 		logger.info('Fichero haproxy modificado')
 		
-	subprocess.run(["lxc", "file", "push", "haproxy.cfg", "lb/etc/haproxy/haproxy.cfg"])
+	subprocess.run(['lxc', 'file', 'push', 'haproxy.cfg', 'lb/etc/haproxy/haproxy.cfg'])
 		
 	logger.info('Fichero balanceador subido')	
 	
