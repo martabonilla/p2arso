@@ -3,7 +3,7 @@ import socket
 import subrprocess
 import logging
 
-def remoto()
+def remoto():
 
 	logging.basicConfig(level=logging.INFO)
 	logger = logging.getLogger(__name__)
