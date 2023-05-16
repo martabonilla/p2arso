@@ -4,6 +4,7 @@ import pickle
 import logging
 import time
 import socket
+import requests
 
 
 def configure():
@@ -17,8 +18,8 @@ def configure():
 			fichero=5
 			
 #Obtenemos las direcciones IP de A (local) y de B (remoto) para crear la BD remota
-	IP_A=socket.gethostbyname(socket.gethostname())
-	print('La dirección IP de A es '+ socket.gethostbyname(socket.gethostname()))
+	IP_A=requests.get('http://checkip.amazonaws.com').text.strip()
+	print('La dirección IP de A es '+ IP_A)
 	while True:
 		IP_B=input('Introduzca la IP de B: ')
 		if IP_B == '':
