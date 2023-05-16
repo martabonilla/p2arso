@@ -27,7 +27,7 @@ def remoto():
 	
 	
 #Permitimos el acceso remoto a las operaciones LXD
-	subprocess.run('lxc', 'config', 'set', 'core.https', 'address', IPB)
+	subprocess.run('lxc', 'config', 'set', 'core.https_address', IPB)
 	
 #Información para la acreditación en remoto
 	subprocess.run('lxc', 'config', 'set', 'core.trust', 'password', 'ARSO')
