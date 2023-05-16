@@ -41,7 +41,7 @@ def remoto():
 			if buscado in linea:
 				data[i] = "const mongoURL = process.env.MONGO_URL || 'mongodb://" + IP_B + ":27017/bio_bbdd';"
 				break
-			elif:
+			else:
 				continue
 			
 	
@@ -59,7 +59,7 @@ def remoto():
 			if buscado2 in linea:
 				data2[i] = "const mongoURL = process.env.MONGO_URL || 'mongodb://" + IP_B + ":27017/bio_bbdd';"
 				break
-			elif:
+			else:
 				continue
 	
 	
