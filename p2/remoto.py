@@ -22,7 +22,7 @@ def remoto():
 			break
 	logger.info('Direcciones IP obtenidas')  
   
-	IP_B=socket.gethostbyname(socket.gethostname())
+	
 	IPB=IP_B+':8443'
 	
 	
