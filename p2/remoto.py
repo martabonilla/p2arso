@@ -2,15 +2,16 @@
 import socket
 import subprocess
 import logging
+import requests
 
 def remoto():
 
 	logging.basicConfig(level=logging.INFO)
 	logger = logging.getLogger(__name__)
 
-	IP_B=socket.gethostbyname(socket.gethostname())
+	IP_B=requests.get('http://checkip.amazonaws.com').text.strip()
 
-	print('La dirección IP de B es ' + socket.gethostbyname(socket.gethostname()))
+	print('La dirección IP de B es ' + IP_B)
 	while True:
 		IP_A=input('Introduzca la IP de A: ')
 		if IP_A == '':
