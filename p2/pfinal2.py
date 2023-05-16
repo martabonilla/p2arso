@@ -17,6 +17,7 @@ import p2_stop
 import p2_stop1
 import configure
 import enlarge
+import createdb
 
 	
 	
@@ -55,6 +56,8 @@ elif sys.argv[1]== 'stop':
 	p2_stop.stop()
 elif sys.argv[1]== 'configure':
 	configure.configure()
+elif sys.argv[1]=='createdb':
+	createdb.createdb()
 else:
 	p2_start.start()
 	
