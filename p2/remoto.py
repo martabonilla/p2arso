@@ -38,7 +38,7 @@ def remoto():
 	with open('app/rest_server.js', 'r') as fich:
 		data = fich.readlines()
 	
-		for i, linea in enumarate(data):
+		for i, linea in enumerate(data):
 			if buscado in linea:
 				data[i] = "const mongoURL = process.env.MONGO_URL || 'mongodb://" + IP_B + ":27017/bio_bbdd';"
 				break
