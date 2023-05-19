@@ -99,7 +99,7 @@ def configure():
 	subprocess.run(['apt', 'install', 'haproxy'])
 	time.sleep(5)
 	
-	subprocess.run(['lxc', 'file', 'pull', 'lb/etc/haproxy/haproxy.cfg', '.'])
+	subprocess.run(['lxc', 'file', 'pull', 'etc/haproxy/haproxy.cfg', '.'])
 	logger.info('Fichero haproxy bajado')
 	
 	time.sleep(5)
