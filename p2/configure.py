@@ -97,7 +97,7 @@ def configure():
 	subprocess.run(['lxc', 'exec', 'lb', 'bash'])
 	subprocess.run(['apt', 'update'])
 	subprocess.run(['apt', 'install', 'haproxy'])
-	
+	time.sleep(5)
 	
 	subprocess.run(['lxc', 'file', 'pull', 'lb/etc/haproxy/haproxy.cfg', '.'])
 	logger.info('Fichero haproxy bajado')
@@ -127,7 +127,7 @@ def configure():
 		fich.write('     option httpchk')
 		logger.info('Fichero haproxy modificado')
 		
-	subprocess.run(['lxc', 'file', 'push', 'haproxy.cfg', 'lb/etc/haproxy/haproxy.cfg'])
+	subprocess.run(['lxc', 'file', 'push', 'haproxy.cfg', 'etc/haproxy/haproxy.cfg'])
 		
 	logger.info('Fichero balanceador subido')	
 	
