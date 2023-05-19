@@ -83,7 +83,7 @@ def configure():
 		
 		
 #Instalamos haproxy en el balanceador para que pueda atender peticiones en paralelo
-	subprocess.run(['lxc','restart','lb'])
+	#subprocess.run(['lxc','restart','lb'])
 	
 	#subprocess.run(['lxc', 'exec', 'lb', 'bash'])
 	subprocess.run(['lxc', 'exec', 'lb', '--', 'apt', 'update'])
@@ -91,11 +91,11 @@ def configure():
 	time.sleep(20)
 	logger.info('Haproxy instalado en el balanceador')
 	
-	subprocess.run(['lxc', 'file', 'pull', 'lb/etc/haproxy/haproxy.cfg', '.'])
+	subprocess.run(['lxc', 'file', 'pull', 'lb/etc/haproxy/haproxy.cfg', 'florero2'])
 	logger.info('Fichero haproxy bajado')
 	
 	time.sleep(5)
-	with open('haproxy.cfg', 'a') as fich:
+	with open('florero2', 'a') as fich:
 	
 		texto =  'frontend firstbalance'
 		texto2 = '     bind *:80'
@@ -119,7 +119,7 @@ def configure():
 		fich.write('     option httpchk')
 		logger.info('Fichero haproxy modificado')
 		
-	subprocess.run(['lxc', 'file', 'push', 'haproxy.cfg', 'lb/etc/haproxy/haproxy.cfg'])
+	subprocess.run(['lxc', 'file', 'push', 'florero2', 'lb/etc/haproxy/haproxy.cfg'])
 	remove('haproxy.cfg')
 	
 		
