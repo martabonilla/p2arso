@@ -5,6 +5,8 @@ import logging
 import time
 import socket
 import requests
+from os import remove
+
 
 
 def configure():
@@ -17,17 +19,6 @@ def configure():
 		if fichero>5:
 			fichero=5
 			
-#Obtenemos las direcciones IP de A (local) y de B (remoto) para crear la BD remota
-	IP_A=requests.get('http://checkip.amazonaws.com').text.strip()
-	print('La dirección IP de A es '+ IP_A)
-	while True:
-		IP_B=input('Introduzca la IP de B: ')
-		if IP_B == '':
-			print('Valor inválido')
-			continue
-		else:
-			break
-	logger.info('Direcciones IP obtenidas')
 #Creamos el contenedor a partir de la imagen descargada
 	subprocess.run(['lxc', 'init', 'imagenbase', 'db'])
 	logger.info('Contenedor de la base de datos creado')
@@ -128,12 +119,30 @@ def configure():
 		logger.info('Fichero haproxy modificado')
 		
 	subprocess.run(['lxc', 'file', 'push', 'haproxy.cfg', 'lb/etc/haproxy/haproxy.cfg'])
+	remove('haproxy.cfg')
 	
 		
 	logger.info('Fichero balanceador subido')	
 	
 	#subprocess.run(['haproxy', '-f', 'lb/etc/haproxy/haproxy.cfg', '-c'])
 	subprocess.run(['lxc', 'exec', 'lb', '--','service', 'haproxy', 'start'])
+	
+	#Comenzamos la conexion con B
+	prin('Ejecute remoto en el contenedor remoto')
+	time.sleep(10)
+	
+	#Obtenemos las direcciones IP de A (local) y de B (remoto) para crear la BD remota
+	IP_A=requests.get('http://checkip.amazonaws.com').text.strip()
+	print('La dirección IP de A es '+ IP_A)
+	while True:
+		IP_B=input('Introduzca la IP de B: ')
+		if IP_B == '':
+			print('Valor inválido')
+			continue
+		else:
+			break
+	logger.info('Direcciones IP obtenidas')
+	#time.sleep(30)
 	
 	#Permitir el acceso remoto a las operaciones de LXD
 	texto = IP_A + ':8443'
