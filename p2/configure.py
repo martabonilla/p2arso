@@ -133,7 +133,7 @@ def configure():
 	logger.info('Fichero balanceador subido')	
 	
 	#subprocess.run(['haproxy', '-f', 'lb/etc/haproxy/haproxy.cfg', '-c'])
-	subprocess.run(['service', 'haproxy', 'start'])
+	subprocess.run(['lxc', 'exec', 'lb', '--','service', 'haproxy', 'start'])
 	
 	#Permitir el acceso remoto a las operaciones de LXD
 	texto = IP_A + ':8443'
