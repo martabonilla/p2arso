@@ -86,7 +86,7 @@ def configure():
 		subprocess.run(['lxc', 'file', 'push', '-r', 'app', direccion2])
 		subprocess.run(['lxc', 'exec', numeroS, '--' ,'./install.sh'])
 		subprocess.run(['lxc', 'restart', numeroS])
-		subprocess.run(['lxc', 'exec', numeroS, '--', 'forever', 'start', 'app/rest', 'server.js'])
+		subprocess.run(['lxc', 'exec', numeroS, '--', 'forever', 'start', 'app/rest_server.js'])
 		
 		
 		
