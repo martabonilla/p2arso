@@ -20,7 +20,7 @@ def delete():
 		subprocess.run(['lxc', 'delete', numeroS])
 		mensaje= numeroS+' eliminado'
 		logger.info(mensaje)
-	
+	#Paramos y eliminamos todos los contenedores y redes
 	subprocess.run(['lxc', 'stop', 'lb'])
 	subprocess.run(['lxc', 'delete', 'lb'])
 	logger.info('Balanceador eliminado')
@@ -29,6 +29,11 @@ def delete():
 	logger.info('Cliente eliminado')
 	subprocess.run(['lxc', 'network','delete', 'lxdbr1'])
 	logger.info('Red eliminada')
-		
+	subprocess.run(['lxc', 'stop', 'cl'])
+	subprocess.run(['lxc', 'delete', 'cl'])
+	logger.info('Cliente eliminado')
+	subprocess.run(['lxc', 'stop', 'db'])
+	subprocess.run(['lxc', 'delete', 'db'])
+	logger.info('Contenedor de la base de datos eliminado')	
 	
 
