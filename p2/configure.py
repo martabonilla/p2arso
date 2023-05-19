@@ -122,7 +122,7 @@ def configure():
 		for i in range(fichero):
 			numero = i +1
 			numeroS = 's' + str(numero)
-			fich.write('     server webserver' + str(numero) + ' ' + numeroS + ':80 check'+'\n')
+			fich.write('     server webserver' + str(numero) + ' ' + numeroS + ':8001'+'\n')
 		
 		fich.write('     option httpchk')
 		logger.info('Fichero haproxy modificado')
