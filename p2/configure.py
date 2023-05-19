@@ -96,7 +96,7 @@ def configure():
 	
 	#subprocess.run(['lxc', 'exec', 'lb', 'bash'])
 	subprocess.run(['lxc', 'exec', 'lb', '--', 'apt', 'update'])
-	subprocess.run(['lxc', 'exec', 'lb', '--','apt', 'install', 'haproxy'])
+	subprocess.run(['lxc', 'exec', 'lb', '--','apt', 'install', '-y', 'haproxy'])
 	time.sleep(5)
 	
 	subprocess.run(['lxc', 'file', 'pull', 'lb/etc/haproxy/haproxy.cfg', '.'])
