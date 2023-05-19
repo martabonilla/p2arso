@@ -128,7 +128,7 @@ def configure():
 	subprocess.run(['lxc', 'exec', 'lb', '--','service', 'haproxy', 'start'])
 	
 	#Comenzamos la conexion con B
-	prin('Ejecute remoto en el contenedor remoto')
+	print('Ejecute remoto en el contenedor remoto')
 	time.sleep(10)
 	
 	#Obtenemos las direcciones IP de A (local) y de B (remoto) para crear la BD remota
