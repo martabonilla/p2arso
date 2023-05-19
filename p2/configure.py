@@ -75,7 +75,7 @@ def configure():
 		ip='134.3.0.'+ str(10+numero)
 		
 		
-		#subprocess.run(['lxc', 'start', numeroS])
+		subprocess.run(['lxc', 'start', numeroS])
 				
 		direccion = numeroS + '/root/install.sh'
 		subprocess.run(['lxc', 'file', 'push', 'install.sh', direccion])
