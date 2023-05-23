@@ -160,7 +160,7 @@ def configure():
 	
 	#Configurar un bridge remoto. Este bridge ya existe en el equipo lB
 	subprocess.run(['lxc', 'network', 'set', 'remoto:lxdbr0', 'ipv4.address', '134.3.0.1/24'])
-	subprocess.run(['lxc', 'network', 'set', 'remoto:lxdbr0', 'ipv4.address', '134.3.0.1/24'])
+	subprocess.run(['lxc', 'network', 'set', 'remoto:lxdbr0', 'ipv4.nat', 'true'])
 	logger.info('Bridge remoto configurado')
 	
 	#Copiamos el contenedor de BD que hamos creado al equipo remoto
