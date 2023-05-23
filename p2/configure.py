@@ -128,6 +128,9 @@ def configure():
 	#subprocess.run(['haproxy', '-f', 'lb/etc/haproxy/haproxy.cfg', '-c'])
 	subprocess.run(['lxc', 'exec', 'lb', '--','service', 'haproxy', 'start'])
 	
+	subprocess.run(['lxc','restart','lb'])
+	time.sleep(10)
+	
 	#Comenzamos la conexion con B
 	print('Ejecute remoto en el contenedor remoto')
 	time.sleep(10)
