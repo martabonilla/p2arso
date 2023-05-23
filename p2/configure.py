@@ -150,7 +150,7 @@ def configure():
 	
 	#Permitir el acceso remoto a las operaciones de LXD
 	texto = IP_A + ':8443'
-	subprocess.run(['lxc', 'config', 'set', 'core.https', 'address', texto])
+	subprocess.run(['lxc', 'config', 'set', 'core.https_address', texto])
 	logger.info('Hemos permitido el acceso remoto a las operaciones de LXD')
 	
 	#Acreditarse en el sistema remoto. Esto permite al equipo lA conectarse de manera remota al servicio LXD que se ejecuta en el equipo lB. remoto es el nombre que le damos al remoto de LXD.
