@@ -163,7 +163,7 @@ def configure():
 	
 		for i, linea in enumerate(data):
 			if buscado in linea:
-				data[i] = "const mongoURL = process.env.MONGO_URL || 'mongodb://" + IP_B + ":27017/bio_bbdd';"
+				data[i] = "await mongoose.connect(’mongodb://"+ IP-B +"/bio bbdd’"
 				break
 			else:
 				continue
@@ -178,7 +178,7 @@ def configure():
 	
 #Cambiamos el fichero md-seed-config (cambiamos IP de MongoDB)
 	buscado2 = 'const mongoURL'
-	with open('app/md-seed-config.js', 'r') as fich:
+	with open('/app/md-seed-config.js', 'r') as fich:
 		data2 = fich.readlines()
 	
 		for i, linea in enumerate(data2):
@@ -189,7 +189,7 @@ def configure():
 				continue
 	
 	
-	with open('app/md-seed-config.js', 'w') as fich:
+	with open('/app/md-seed-config.js', 'w') as fich:
 		fich.writelines(data2 + '\n')
 	logger.info('fichero md-seed-config cambiado')
 	
