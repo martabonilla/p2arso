@@ -183,6 +183,10 @@ def configure():
 	
 	
 #Instalamos Node.js en los servidores ya creados
+subprocess.run(['lxc', 'file', 'push', 'install.sh', 'remoto:db/root/install.sh'])
+subprocess.run(['lxc', 'exec', 'remoto:db',  '--', 'chmod', '+x', 'install.sh'])
+
+
 	for i in range(fichero):
 		numero=i+1
 		numeroS='s'+str(numero)
