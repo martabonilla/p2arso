@@ -47,7 +47,7 @@ def create():
 		subprocess.run(['lxc', 'network', 'attach', 'lxdbr0', numeroS, 'eth0'])
 		subprocess.run(['lxc', 'config', 'device', 'set', numeroS, 'eth0', 'ipv4.address', ip])
 		#subprocess.run(['lxc', 'start', numeroS])
-		mensaje=numeroS + 'creado y configurado'
+		mensaje=numeroS + ' creado y configurado'
 		logger.info(mensaje)
 		
 		#direccion = numeroS + '/root/install.sh'
