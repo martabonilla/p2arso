@@ -59,30 +59,6 @@ def configure():
 
 	
 	
-	
-#Instalamos Node.js en los servidores ya creados
-	for i in range(fichero):
-		numero=i+1
-		numeroS='s'+str(numero)
-		ip='134.3.0.'+ str(10+numero)
-		
-		
-		subprocess.run(['lxc', 'start', numeroS])
-				
-		direccion = numeroS + '/root/install.sh'
-		subprocess.run(['lxc', 'file', 'push', 'install.sh', direccion])
-		subprocess.run(['lxc', 'exec', numeroS,  '--', 'chmod', '+x', 'install.sh'])
-#Desplegamos la aplicación en los servidores
-		time.sleep(5)
-		direccion2 = numeroS + '/root'
-		subprocess.run(['lxc', 'file', 'push', '-r', 'app', direccion2])
-		subprocess.run(['lxc', 'exec', numeroS, '--' ,'./install.sh'])
-		subprocess.run(['lxc', 'restart', numeroS])
-		subprocess.run(['lxc', 'exec', numeroS, '--', 'forever', 'start', 'app/rest_server.js'])
-		
-		
-		
-		
 #Instalamos haproxy en el balanceador para que pueda atender peticiones en paralelo
 	#subprocess.run(['lxc','restart','lb'])
 	
@@ -148,31 +124,95 @@ def configure():
 			break
 	logger.info('Direcciones IP obtenidas')
 	#time.sleep(30)
-	
-	#Permitir el acceso remoto a las operaciones de LXD
+
+
+#Permitir el acceso remoto a las operaciones de LXD
 	texto = IP_A + ':8443'
 	subprocess.run(['lxc', 'config', 'set', 'core.https_address', texto])
 	logger.info('Hemos permitido el acceso remoto a las operaciones de LXD')
 	#subprocess.run(['snap', 'set', 'lxd', 'criu.enable=true'])
 	
-	#Acreditarse en el sistema remoto. Esto permite al equipo lA conectarse de manera remota al servicio LXD que se ejecuta en el equipo lB. remoto es el nombre que le damos al remoto de LXD.
+#Acreditarse en el sistema remoto. Esto permite al equipo lA conectarse de manera remota al servicio LXD que se ejecuta en el equipo lB. remoto es el nombre que le damos al remoto de LXD.
 	texto2= IP_B+':8443'
 	subprocess.run(['lxc', 'remote', 'add', 'remoto', texto2, '--password', 'ARSO', '--accept-certificate'])
 	logger.info('El equipo lA conectarse de manera remota al servicio LXD que se ejecuta en el equipo lB')
 	
-	#Configurar un bridge remoto. Este bridge ya existe en el equipo lB
+#Configurar un bridge remoto. Este bridge ya existe en el equipo lB
 	subprocess.run(['lxc', 'network', 'set', 'remoto:lxdbr0', 'ipv4.address', '134.3.0.1/24'])
 	subprocess.run(['lxc', 'network', 'set', 'remoto:lxdbr0', 'ipv4.nat', 'true'])
 	logger.info('Bridge remoto configurado')
 	
-	#Copiamos el contenedor de BD que hamos creado al equipo remoto
+#Copiamos el contenedor de BD que hamos creado al equipo remoto
 	subprocess.run(['lxc', 'stop', 'db'])
 	subprocess.run(['lxc', 'copy', 'db', 'remoto:db'])
 	logger.info('Contenedor de la BD copiado al equipo remoto')
 	
-	#Creamos un proxy, para acceso remoto a las base de datos de manera remota
+#Creamos un proxy, para acceso remoto a las base de datos de manera remota
 	cosa='listen=tcp:'+IP_B+':27017'
 	subprocess.run(['lxc', 'config', 'device', 'add', 'db', 'miproxy', 'proxy', cosa, 'connect=tcp:134.3.0.20:27017'])
+		
+	
+
+#Cambiamos el fichero rest_server (cambiamos IP de MongoDB)
+	buscado = 'await mongoose.connect'
+
+	with open('app/rest_server.js', 'r') as fich:
+		data = fich.readlines()
+	
+		for i, linea in enumerate(data):
+			if buscado in linea:
+				data[i] = "const mongoURL = process.env.MONGO_URL || 'mongodb://" + IP_B + ":27017/bio_bbdd';"
+				break
+			else:
+				continue
+			
+	
+	
+	with open('app/rest_server.js', 'w') as fich:
+		fich.writelines(data)
+	
+	logger.info('rest_server.js configurado') 
+	
+	
+#Cambiamos el fichero md-seed-config (cambiamos IP de MongoDB)
+	buscado2 = 'const mongoURL'
+	with open('app/md-seed-config.js', 'r') as fich:
+		data2 = fich.readlines()
+	
+		for i, linea in enumerate(data2):
+			if buscado2 in linea:
+				data2[i] = "const mongoURL = process.env.MONGO_URL || 'mongodb://" + IP_B + ":27017/bio_bbdd';"
+				break
+			else:
+				continue
+	
+	
+	with open('app/md-seed-config.js', 'w') as fich:
+		fich.writelines(data2)
+	logger.info('fichero md-seed-config cambiado')
+	
+	
+	
+#Instalamos Node.js en los servidores ya creados
+	for i in range(fichero):
+		numero=i+1
+		numeroS='s'+str(numero)
+		ip='134.3.0.'+ str(10+numero)
+		
+		
+		subprocess.run(['lxc', 'start', numeroS])
+				
+		direccion = numeroS + '/root/install.sh'
+		subprocess.run(['lxc', 'file', 'push', 'install.sh', direccion])
+		subprocess.run(['lxc', 'exec', numeroS,  '--', 'chmod', '+x', 'install.sh'])
+#Desplegamos la aplicación en los servidores
+		time.sleep(5)
+		direccion2 = numeroS + '/root'
+		subprocess.run(['lxc', 'file', 'push', '-r', 'app', direccion2])
+		subprocess.run(['lxc', 'exec', numeroS, '--' ,'./install.sh'])
+		subprocess.run(['lxc', 'restart', numeroS])
+		subprocess.run(['lxc', 'exec', numeroS, '--', 'forever', 'start', 'app/rest_server.js'])
+
 	
 	
 		
