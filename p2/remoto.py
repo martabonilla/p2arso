@@ -3,6 +3,7 @@ import socket
 import subprocess
 import logging
 import requests
+import time
 
 def remoto():
 
@@ -28,9 +29,12 @@ def remoto():
 	
 #Permitimos el acceso remoto a las operaciones LXD
 	subprocess.run(['lxc', 'config', 'set', 'core.https_address', IPB])
+	logger.info('Acceso remoto permitido') 
+	
 	
 #Información para la acreditación en remoto
 	subprocess.run(['lxc', 'config', 'set', 'core.trust_password', 'ARSO'])
+	logger.info('Password configurada') 
 
 #Cambiamos el fichero rest_server (cambiamos IP de MongoDB)
 	buscado = 'await mongoose.connect'
@@ -50,7 +54,9 @@ def remoto():
 	with open('app/rest_server.js', 'w') as fich:
 		fich.writelines(data)
 	
-
+	logger.info('rest_server.js configurado') 
+	
+	
 #Cambiamos el fichero md-seed-config (cambiamos IP de MongoDB)
 	buscado2 = 'const mongoURL'
 	with open('app/md-seed-config.js', 'r') as fich:
@@ -66,5 +72,6 @@ def remoto():
 	
 	with open('app/md-seed-config.js', 'w') as fich:
 		fich.writelines(data2)
-
+	logger.info('fichero md-seed-config cambiado')
+	
 remoto()
