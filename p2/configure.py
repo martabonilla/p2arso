@@ -160,7 +160,7 @@ def configure():
 
 	with open('app/rest_server.js', 'r') as fich:
 		data = fich.readlines()
-		data.replace('10.0.0.20',IP_B)
+		data[11].replace('10.0.0.20',IP_B)
 	
 	
 	with open('app/rest_server.js', 'w') as fich:
@@ -171,13 +171,13 @@ def configure():
 	
 #Cambiamos el fichero md-seed-config (cambiamos IP de MongoDB)
 	buscado2 = 'const mongoURL'
-	with open('/app/md-seed-config.js', 'r') as fich:
+	with open('app/md-seed-config.js', 'r') as fich:
 		data2 = fich.readlines()
-		data2.replace('10.0.0.20',IP_B)
+		data2[2].replace('10.0.0.20',IP_B)
 		
 		
 	
-	with open('/app/md-seed-config.js', 'w') as fich:
+	with open('app/md-seed-config.js', 'w') as fich:
 		fich.writelines(data2)
 	logger.info('fichero md-seed-config cambiado')
 	
