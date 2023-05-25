@@ -156,24 +156,23 @@ def configure():
 	
 
 #Cambiamos el fichero rest_server (cambiamos IP de MongoDB)
-	buscado = 'await mongoose.connect'
 
 	with open('app/rest_server.js', 'r') as fich:
-		data = fich.readlines()
-		data[11].replace('10.0.0.20',IP_B)
+		data = fich.read()
+		dataNuevo=data.replace('10.0.0.20',IP_B)
 	
 	
 	with open('app/rest_server.js', 'w') as fich:
-		fich.writelines(data)
+		fich.writelines(dataNuevo)
 	
 	logger.info('rest_server.js configurado') 
 	
 	
 #Cambiamos el fichero md-seed-config (cambiamos IP de MongoDB)
-	buscado2 = 'const mongoURL'
+	
 	with open('app/md-seed-config.js', 'r') as fich:
-		data2 = fich.readlines()
-		data2[2].replace('10.0.0.20',IP_B)
+		data2 = fich.read()
+		dataNuevo2=data2.replace('10.0.0.20',IP_B)
 		
 		
 	
