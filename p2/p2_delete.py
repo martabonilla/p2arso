@@ -35,5 +35,7 @@ def delete():
 	subprocess.run(['lxc', 'stop', 'db'])
 	subprocess.run(['lxc', 'delete', 'db'])
 	logger.info('Contenedor de la base de datos eliminado')	
+	subprocess.run(['lxc', 'remote', 'remove', 'remoto'])
+	logger.info('Remoto borrado a nivel local')
 	
 
