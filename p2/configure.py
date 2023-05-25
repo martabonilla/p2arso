@@ -145,6 +145,8 @@ def configure():
 #Copiamos el contenedor de BD que hamos creado al equipo remoto
 	subprocess.run(['lxc', 'stop', 'db'])
 	subprocess.run(['lxc', 'copy', 'db', 'remoto:db'])
+	time.sleep(30)
+	subprocess.run(['lxc','start','remoto:db'])
 	logger.info('Contenedor de la BD copiado al equipo remoto')
 	
 #Creamos un proxy, para acceso remoto a las base de datos de manera remota
