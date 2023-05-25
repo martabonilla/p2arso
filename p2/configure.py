@@ -9,6 +9,7 @@ from os import remove
 
 
 
+
 def configure():
 #Definimos el niverl de LOG
 	logging.basicConfig(level=logging.INFO)
@@ -120,7 +121,7 @@ def configure():
 		logger.info('Fichero haproxy modificado')
 		
 	subprocess.run(['lxc', 'file', 'push', 'florero2', 'lb/etc/haproxy/haproxy.cfg'])
-	remove('haproxy.cfg')
+	remove('florero2')
 	
 		
 	logger.info('Fichero balanceador subido')	
@@ -152,6 +153,7 @@ def configure():
 	texto = IP_A + ':8443'
 	subprocess.run(['lxc', 'config', 'set', 'core.https_address', texto])
 	logger.info('Hemos permitido el acceso remoto a las operaciones de LXD')
+	#subprocess.run(['snap', 'set', 'lxd', 'criu.enable=true'])
 	
 	#Acreditarse en el sistema remoto. Esto permite al equipo lA conectarse de manera remota al servicio LXD que se ejecuta en el equipo lB. remoto es el nombre que le damos al remoto de LXD.
 	texto2= IP_B+':8443'
@@ -164,6 +166,7 @@ def configure():
 	logger.info('Bridge remoto configurado')
 	
 	#Copiamos el contenedor de BD que hamos creado al equipo remoto
+	subprocess.run(['lxc', 'stop', 'db'])
 	subprocess.run(['lxc', 'copy', 'db', 'remoto:db'])
 	logger.info('Contenedor de la BD copiado al equipo remoto')
 	
