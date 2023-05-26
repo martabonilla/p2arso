@@ -151,7 +151,7 @@ def configure():
 	
 #Creamos un proxy, para acceso remoto a las base de datos de manera remota
 	cosa='listen=tcp:'+IP_B+':27017'
-	subprocess.run(['lxc', 'config', 'device', 'add', 'db', 'miproxy', 'proxy', cosa, 'connect=tcp:134.3.0.20:27017'])
+	subprocess.run(['lxc', 'config', 'device', 'add', 'remoto:db', 'miproxy', 'proxy', cosa, 'connect=tcp:134.3.0.20:27017'])
 		
 	
 
