@@ -177,7 +177,7 @@ def configure():
 		
 	
 	with open('app/md-seed-config.js', 'w') as fich:
-		fich.write(data2)
+		fich.write(dataNuevo2)
 	logger.info('fichero md-seed-config cambiado')
 	
 	
