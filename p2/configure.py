@@ -163,7 +163,7 @@ def configure():
 	
 	
 	with open('app/rest_server.js', 'w') as fich:
-		fich.writelines(dataNuevo)
+		fich.write(dataNuevo)
 	
 	logger.info('rest_server.js configurado') 
 	
@@ -177,7 +177,7 @@ def configure():
 		
 	
 	with open('app/md-seed-config.js', 'w') as fich:
-		fich.writelines(data2)
+		fich.write(data2)
 	logger.info('fichero md-seed-config cambiado')
 	
 	
