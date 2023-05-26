@@ -11,7 +11,7 @@ from os import remove
 
 
 def configure():
-#Definimos el niverl de LOG
+#Definimos el nivel de LOG
 	logging.basicConfig(level=logging.INFO)
 	logger = logging.getLogger(__name__)
 	
