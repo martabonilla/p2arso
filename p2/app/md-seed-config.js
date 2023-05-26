@@ -2,6 +2,10 @@ const mongoose =require ('mongoose');
 var Patients = require ('./seeders/patients.seeder')
 const mongoURL = process.env.MONGO_URL || 'mongodb://10.0.0.20:27017/bio_bbdd';
 
+
+
+
+
 /**
  * Seeders List
  * order is important
