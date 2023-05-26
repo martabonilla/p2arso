@@ -45,7 +45,7 @@ def create1():
 	subprocess.run(['lxc', 'file', 'push', '-r', 'app', direccion2])
 	subprocess.run(['lxc', 'exec', variable, '--' './install.sh'])
 	subprocess.run(['lxc', 'restart', variable])
-	subprocess.run(['lxc', 'exec', variable, '--', 'forever', 'start', 'app/rest', 'server.js'])
+	subprocess.run(['lxc', 'exec', variable, '--', 'forever', 'start', 'app/rest_server.js'])
 	
 	
 
