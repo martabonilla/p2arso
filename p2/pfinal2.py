@@ -51,7 +51,7 @@ elif sys.argv[1] == 'delete1':
 	p2_delete1.delete1(sys.argv[2])
 
 elif sys.argv[1]== 'enlarge':
-	p2_enlarge.enlarge()
+	enlarge.create1()
 elif sys.argv[1]== 'stop':
 	p2_stop.stop()
 elif sys.argv[1]== 'configure':
