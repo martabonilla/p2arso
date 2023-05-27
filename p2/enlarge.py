@@ -38,7 +38,7 @@ def create1():
 	subprocess.run(['lxc', 'start', variable])
 	
 	direccion = variable + '/root/install.sh'
-	subprocess.run(['lxc', 'file', 'push', 'install.sh', 'direccion'])
+	subprocess.run(['lxc', 'file', 'push', 'install.sh', direccion])
 	subprocess.run(['lxc', 'exec', variable,  '--', 'chmod', '+x', 'install.sh'])
 		
 	direccion2 = variable + '/root'
